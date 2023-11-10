@@ -1,0 +1,6 @@
+---
+title: "Example #2"
+format: dashboard
+---
+
+New example TO DEV

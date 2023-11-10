@@ -1,0 +1,8 @@
+---
+title: "Dashboards"
+---
+
+Exploring Dashboards as this functionality soon becomes supported 
+in a future stable release of Quarto.
+
+
