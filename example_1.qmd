@@ -3,7 +3,7 @@ title: "Example #1"
 format: dashboard
 ---
 
-My primary interest here is the dashboard functionality and construction. This example taken was reproduced from the [Quarto website](https://quarto.org/docs/dashboards/ "Quarto website") which is in turn takes the data from the [Python plotly.data package](https://plotly.com/python-api-reference/generated/plotly.data.html#module-plotly.data "Python plotly.data package"). The call to gapminder() returns a pandas.DataFrame with data from [GapMinder](https://www.gapminder.org/data/ "GapMinder"). Simple function calls to [plotly.express](https://plotly.com/python-api-reference/plotly.express.html "plotly.express") scatter(), area() and line() populate the dashboard. This functionality is possible with just five lines of code.
+My primary interest here is the dashboard functionality and construction. This example taken was reproduced from the [Quarto website](https://quarto.org/docs/dashboards/ "Quarto website") which is in turn takes the data from the [Python plotly.data package](https://plotly.com/python-api-reference/generated/plotly.data.html#module-plotly.data "Python plotly.data package"). The call to gapminder() returns a pandas.DataFrame with data from [GapMinder](https://www.gapminder.org/data/ "GapMinder"). Simple function calls to [plotly.express](https://plotly.com/python-api-reference/plotly.express.html "plotly.express") scatter(), area() and line() populate the dashboard. This functionality is possible with just five lines of code! (OK, if the code were poorly formatted. Better to say, 4 function calls and a library import). In any case, it's impressive how much functionality is available "off the shelf" these days.
 
 ```{python}
 # comments

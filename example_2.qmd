@@ -3,4 +3,76 @@ title: "Example #2"
 format: dashboard
 ---
 
-New example TO DEV
+```{python}
+# comments
+import math
+import plotly.express as px
+df = px.data.gapminder()
+
+# this works but probably a better way 
+# it would be much easier in R for example
+df['pop_log10'] = df['pop'] 
+df['pop_log10'] = df['pop_log10'].map(lambda pop_log10: math.log10(pop_log10) )
+# could be used to render size differently 
+
+```
+
+# GDP and Life Expectancy
+
+## Row  {height="20%"}
+```
+Like 'Example #1', just modified now
+  - a tab layout 
+  - using a mixture of Python and R code
+  - main plot of GDP and Life Expectancy is more easily interpreted
+  - 
+```
+
+## Row  {height="80%"}
+```{python}
+#| title: GDP and Life Expectancy 
+px.scatter(  
+  df, x="gdpPercap", y="lifeExp", 
+  animation_frame="year", animation_group="country", 
+  size="pop", color="continent", hover_name="country",
+  log_x=False, size_max=35, 
+  range_x=[0,50000], range_y=[25,85] 
+)  
+```
+
+# Population and Life Expectancy
+
+## Row {.tabset}
+```{python}
+#| title: Population
+px.area(
+  df, x="year", y="pop", 
+  color="continent", line_group="country"
+)
+```
+
+```{python}
+#| title: Life Expectancy
+px.line(
+  df, x="year", y="lifeExp", 
+  color="continent", line_group="country"
+)
+```
+
+# Code and Data
+
+## Row 
+
+```{python}
+#| title: Python
+df
+```
+
+## Row 
+
+```{r}
+#| title: R
+df
+```
+
+
