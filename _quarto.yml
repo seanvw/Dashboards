@@ -15,7 +15,7 @@ website:
         text: 'Example #2'
 format:
   html:
-    theme: solar
+    theme: minty
     css: styles.css
     toc: true
 

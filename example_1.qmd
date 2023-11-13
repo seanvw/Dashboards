@@ -3,14 +3,15 @@ title: "Example #1"
 format: dashboard
 ---
 
-Example taken directly from "Gapminder Analytics Group", entitled "Development Indicators by Continent". Only interested in the dashboard functionality and construction, not the data (although I have no doubt that the data is intrinsically interesting)
+My primary interest here is the dashboard functionality and construction. This example taken was reproduced from the [Quarto website](https://quarto.org/docs/dashboards/ "Quarto website") which is in turn takes the data from the [Python plotly.data package](https://plotly.com/python-api-reference/generated/plotly.data.html#module-plotly.data "Python plotly.data package"). The call to gapminder() returns a pandas.DataFrame with data from [GapMinder](https://www.gapminder.org/data/ "GapMinder"). Simple function calls to [plotly.express](https://plotly.com/python-api-reference/plotly.express.html "plotly.express") scatter(), area() and line() populate the dashboard. This functionality is possible with just five lines of code.
 
 ```{python}
+# comments
 import plotly.express as px
 df = px.data.gapminder()
 ```
 
-## Row {height=60%}
+## Row {height="60%"}
 
 ```{python}
 #| title: GDP and Life Expectancy 
@@ -23,7 +24,7 @@ px.scatter(
 )  
 ```
 
-## Row {height=40%}
+## Row {height="40%"}
 
 ```{python}
 #| title: Population
