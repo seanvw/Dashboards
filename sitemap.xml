@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://seanvw.github.io/Dashboards/example_2.html</loc>
-    <lastmod>2023-11-16T08:45:17.400Z</lastmod>
+    <loc>https://seanvw.github.io/Dashboards/example_3.html</loc>
+    <lastmod>2023-11-16T09:51:14.497Z</lastmod>
   </url>
   <url>
-    <loc>https://seanvw.github.io/Dashboards/about.html</loc>
-    <lastmod>2023-11-10T16:31:06.323Z</lastmod>
+    <loc>https://seanvw.github.io/Dashboards/example_1.html</loc>
+    <lastmod>2023-11-16T08:42:49.638Z</lastmod>
   </url>
   <url>
     <loc>https://seanvw.github.io/Dashboards/index.html</loc>
     <lastmod>2023-11-10T16:13:48.000Z</lastmod>
   </url>
   <url>
-    <loc>https://seanvw.github.io/Dashboards/example_1.html</loc>
-    <lastmod>2023-11-16T08:42:49.638Z</lastmod>
+    <loc>https://seanvw.github.io/Dashboards/about.html</loc>
+    <lastmod>2023-11-10T16:31:06.323Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seanvw.github.io/Dashboards/example_2.html</loc>
+    <lastmod>2023-11-16T08:51:24.726Z</lastmod>
   </url>
 </urlset>
