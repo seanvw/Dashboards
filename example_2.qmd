@@ -3,8 +3,16 @@ title: "Example #2"
 format: dashboard
 ---
 
+```{r}
+# use of reticulate allows variables created in python
+# to be accessed by R
+library(reticulate)
+```
+
+
 ```{python}
 # comments
+import pandas as pd
 import math
 import plotly.express as px
 df = px.data.gapminder()
@@ -21,11 +29,10 @@ df['pop_log10'] = df['pop_log10'].map(lambda pop_log10: math.log10(pop_log10) )
 
 ## Row  {height="20%"}
 ```
-Like 'Example #1', just modified now
-  - a tab layout 
-  - using a mixture of Python and R code
+Like 'Example #1', but modified for the following reasons
+  - exploration of layouts
+  - testing the facility and functionality to mixup Python and R code and to access and mutate the same variables and data structures
   - main plot of GDP and Life Expectancy is more easily interpreted
-  - 
 ```
 
 ## Row  {height="80%"}
@@ -59,20 +66,58 @@ px.line(
 )
 ```
 
-# Code and Data
+# Data
+
+This is a demonstration of the facility to access variables and data structures created in Python with R code. The head of a data frame is printed using both languages whilst the number of rows is set by a variable set in Python and read in R. Note that the row indexes differ by 1 (0 and 1 based) and that the precision of printing is set differently. Note also, that R prints an additional line of data; the reason is that the code increments a python variable in R i.e. the code performs a mutability test and it works.
 
 ## Row 
 
 ```{python}
-#| title: Python
-df
+#| title: Head of python pandas data frame 
+n_head = 3
+with pd.option_context(
+                       'display.max_columns', 10,
+                       'display.precision', 6,
+                       ):
+     print(df.head(n_head))
+    
 ```
 
 ## Row 
 
 ```{r}
-#| title: R
-df
+#| title: The head of the same data frame but printed with R
+# we get access to python variables in R 
+py$n_head <- py$n_head + 1
+head(py$df,py$n_head)
+
 ```
 
+# Code
+
+## Row
+
+```{python}
+from pathlib import Path
+from textwrap import wrap
+
+# wrap just the long lines over a specified number of characters
+def wrap_long_lines(input_text, max_line_chars):
+    lines = input_text.split('\n')
+    wrapped_lines = []
+    for line in lines:
+        if len(line) > max_line_chars:
+            wrapped_lines.extend(wrap(line, width=max_line_chars))
+        else:
+            wrapped_lines.append(line)
+    wrapped_text = '\n'.join(wrapped_lines)
+    return wrapped_text
+
+txt = Path('example_2.qmd').read_text()
+# its a wrap!
+# those long comments are now readable the Code tab
+wrapped_txt = wrap_long_lines(txt, 130)
+print(wrapped_txt)
+
+```
 
