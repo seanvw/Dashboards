@@ -1,0 +1,168 @@
+---
+title: "Example #4"
+format: dashboard
+---
+
+```{r}
+# use of reticulate allows variables created in python
+# to be accessed by R and vice versa
+library(reticulate)
+```
+
+```{python}
+# comments
+import pandas as pd
+import math
+import plotly.express as px
+import datapackage
+import csv
+import sys
+import urllib.request
+from urllib.error import URLError, HTTPError
+
+```
+
+# Data Fetch
+
+## Row {height="30%"}
+
+Data from:
+
+<https://data.giss.nasa.gov/gistemp/>
+
+-   Section: *Global-mean monthly, seasonal, and annual means, 1880-present, updated through most recent month*
+
+Citations:
+
+-   GISTEMP Team, 2023: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at <https://data.giss.nasa.gov/gistemp/>.
+
+-   Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: [Improvements in the GISTEMP uncertainty model](https://pubs.giss.nasa.gov/abs/le05800h.html). J. Geophys. Res. Atmos., **124**, no. 12, 6307-6326, doi:10.1029/2018JD029522.
+
+## Row {height="70%"}
+
+```{python}
+#| title: Data Extraction 
+
+
+url = 'https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv'
+
+try:
+    # Attempt to open the URL
+    response = urllib.request.urlopen(url)
+    lines = [l.decode('utf-8') for l in response.readlines()]
+    # remove the first line - it's not needed
+    first = lines.pop(0)
+    # print("Removed line: " + first)
+    cr = csv.reader(lines)
+    # the first line beccomes the header
+    df = pd.DataFrame(cr, columns=next(cr))
+    print(df)
+
+
+except HTTPError as e:
+    # Handle HTTPError (e.g., 404 Not Found, 500 Internal Server Error)
+    print(f"HTTPError: {e.code} - {e.reason}")
+    sys.exit("Exiting")
+
+except URLError as e:
+    # Handle URLError (e.g., network connectivity issues)
+    print(f"URLError: {e.reason}")
+    sys.exit("Exiting")
+
+except Exception as e:
+    # Handle other exceptions
+    print(f"An unexpected error occurred: {e}")
+    sys.exit("Exiting")
+
+
+# how to gracefully exit from R, Quarto, knitr when a python exception is thrown
+
+```
+
+# Data Restructure
+
+```
+Restructure and validate with some sample rows in R, then send the data structure back to Python
+```
+
+## Row {height="30%"}
+
+```{r}
+#| title: process 
+
+library("tidyr")
+library("dplyr")
+# save the retrievd data so it can be easily worked on in console 
+# for dev purposes 
+file_name <- './data/eg4_data.tsv'
+# this is the python data frame coped as R data frame
+df <-py$df
+# remove the string ***
+# it means there is no data yet
+df <- df %>%
+  mutate_all(~replace(., grepl('\\*\\*\\*', .), ''))
+
+write.table(df, file=file_name, quote=FALSE, sep='\t')
+df <- read.table(file = file_name, sep = '\t', header = TRUE)
+df <- as_tibble(df)
+
+# just the monthly data
+dfm <- df[,1:13]
+#
+n_head <- 3
+head(dfm,n_head)
+
+```
+
+## Row {height="70%"}
+
+```{r}
+# pivot long
+dfml <- pivot_longer(dfm, cols = 2:13)
+dfml %>% print(n = n_head * 12)
+# send R df back to python 
+py$dfml <- dfml
+```
+
+# Plots
+
+```
+Look at the data in Python
+```
+
+## Row
+
+```{python}
+#| title: Plots
+
+print(dfml)
+    
+```
+
+# Code
+
+## Row
+
+```{python}
+from pathlib import Path
+from textwrap import wrap
+
+# wrap just the long lines over a specified number of characters
+def wrap_long_lines(input_text, max_line_chars):
+    lines = input_text.split('\n')
+    wrapped_lines = []
+    for line in lines:
+        if len(line) > max_line_chars:
+            wrapped_lines.extend(wrap(line, width=max_line_chars))
+        else:
+            wrapped_lines.append(line)
+    wrapped_text = '\n'.join(wrapped_lines)
+    return wrapped_text
+
+txt = Path('example_4.qmd').read_text()
+# its a wrap!
+# those long comments are now readable the Code tab
+wrapped_txt = wrap_long_lines(txt, 130)
+print(wrapped_txt)
+
+```

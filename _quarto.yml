@@ -13,6 +13,10 @@ website:
         text: 'Example #1'
       - href: example_2.qmd
         text: 'Example #2'
+      - href: example_3.qmd
+        text: 'Example #3'
+      - href: example_4.qmd
+        text: 'Example #4'
 format:
   html:
     theme: minty

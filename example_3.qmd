@@ -1,0 +1,147 @@
+---
+title: "Example #3"
+format: dashboard
+---
+
+```{r}
+# use of reticulate allows variables created in python
+# to be accessed by R
+library(reticulate)
+```
+
+```{python}
+# comments
+import pandas as pd
+import math
+import plotly.express as px
+import datapackage
+
+```
+
+# Global Temperature Data
+
+## Row {height="50%"}
+
+Using data from <https://datahub.io/core/global-temp>
+
+The data runs from 1880 to 2016. Unfortunately not up to date. Will tackle this issue in a further example.
+
+Data are included from the GISS Surface Temperature (GISTEMP) analysis and the global component of Climate at a Glance (GCAG). Anomalies in degrees Celsius.
+
+GISTEMP: Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies \[i.e. deviations from the corresponding 1951-1980 means\].
+
+GCAG: Global temperature anomaly data come from the Global Historical Climatology Network-Monthly (GHCN-M) data set and International Comprehensive Ocean-Atmosphere Data Set (ICOADS), which have data from 1880.
+
+These two data-sets are blended into a single product to produce the combined global land and ocean temperature anomalies.
+
+## Row {height="50%"}
+
+```{python}
+#| title: Data Extraction 
+
+data_url = 'https://datahub.io/core/global-temp/datapackage.json'
+
+# to load Data Package into storage
+package = datapackage.Package(data_url)
+
+# to load only tabular data
+resources = package.resources
+for resource in resources:
+    print("Resource")
+    desc = resource.descriptor
+    for key in desc.keys():
+        if (False):
+          print(key, ":", desc[key])
+        if (key == 'description' or key == 'name'):
+          print(key, ":", desc[key])
+    if resource.tabular and resource.name == "monthly":
+        df = pd.read_csv(resource.descriptor['path'])
+        print(df)
+        # convert to date
+        print("Converting to date type...")
+        df['Date'] = pd.to_datetime(df['Date'])
+        print(df)
+        print(df.dtypes)
+    print('---------------------------------------------', "\n")
+
+```
+
+# Line Plot
+
+## Row {height="10%"}
+
+Global Temperature Time Series from the two data-sets. It is clear from the plot that the same message is delivered by both. The Source key can be toggled to reveal one or other data-set. The Zoom feature is however problematic - requiring two clicks e.g. Click "+" and a second click on Line Plot to show the plot change. Perhaps a HTML/CSS generation issue or web-browser compatibility issue. Issue saved to be addressed later.
+
+## Row {height="90%"}
+
+```{python}
+#| title: Global Temperature Time Series from the two data-sets
+
+fig = px.line(
+  df, x="Date", y="Mean", 
+  color="Source", line_group="Source", 
+  title='Mean Temp Difference to Reference Range', 
+  markers=True)
+
+# Set x-axis date range
+start_date = '1860-01-01'
+end_date = '2030-01-01'
+fig.update_xaxes(range=[start_date, end_date])
+
+```
+
+# HeatMaps
+
+The same data as in the Line Plot now represented in a different way in an attempt to present a more striking view of climate change. To some extent it works, but yet it is confusing for the casual observer since a color scale is produced using a histogram function on Mean (already an average of multiple observations). So for 6 months we have 6 observations of temperature anomalies and these are binned according to their value determined by a resolution parameter (nbinsy is set to 20), then a maximum is taken. That is why we get multiple observations per date range in some cases. Another issue is that all cells in the matrix(x,y) have a value even if they represent 0 observations and therefore max of Mean is 0 (this issue is revealed as mouseover pop-ups are enabled). This plot is both a hit (yes, it's striking) and a miss at the same time. Overall, it's a flop because visualization should be straight forward to understand. In any case, need to solve the issue of retrieving contemporaneous data and will re-address visualization at this stage with a further example.
+
+## Row
+
+```{python}
+#| title: Plotted with 6 month resolution
+
+# 3288 is the number of rows
+# divide by 2 data-sets
+# Divide by 6 months 
+n_rows_per_data_set = 3288/2
+nbinsx = int(n_rows_per_data_set/6)
+nbinsy=20
+fig = px.density_heatmap(df, x="Date", y="Mean",
+  nbinsx=nbinsx, nbinsy=nbinsy, 
+  z="Mean", 
+  histfunc="max",
+ color_continuous_scale=["blue","lightgray","red"],
+ color_continuous_midpoint=0,
+ title = "number of date bins: " + str(nbinsx) + ", number of Mean bins: " + str(nbinsy),
+ facet_col = "Source"
+ )
+fig.show()
+    
+```
+
+# Code
+
+## Row
+
+```{python}
+from pathlib import Path
+from textwrap import wrap
+
+# wrap just the long lines over a specified number of characters
+def wrap_long_lines(input_text, max_line_chars):
+    lines = input_text.split('\n')
+    wrapped_lines = []
+    for line in lines:
+        if len(line) > max_line_chars:
+            wrapped_lines.extend(wrap(line, width=max_line_chars))
+        else:
+            wrapped_lines.append(line)
+    wrapped_text = '\n'.join(wrapped_lines)
+    return wrapped_text
+
+txt = Path('example_3.qmd').read_text()
+# its a wrap!
+# those long comments are now readable the Code tab
+wrapped_txt = wrap_long_lines(txt, 130)
+print(wrapped_txt)
+
+```
