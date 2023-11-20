@@ -134,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
         
       </div>
     </div>
-<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-global-temperature-data" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#global-temperature-data" href="#global-temperature-data" aria-controls="global-temperature-data" aria-selected="true"><span class="nav-link-text">Global Temperature Data</span></a></li><li class="nav-item" role="presentation"><a id="tab-line-plot" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#line-plot" href="#line-plot" aria-controls="line-plot" aria-selected="false"><span class="nav-link-text">Line Plot</span></a></li><li class="nav-item" role="presentation"><a id="tab-plots" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#plots" href="#plots" aria-controls="plots" aria-selected="false"><span class="nav-link-text">Plots</span></a></li><li class="nav-item" role="presentation"><a id="tab-code" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#code" href="#code" aria-controls="code" aria-selected="false"><span class="nav-link-text">Code</span></a></li></ul></div></div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-data-fetch" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#data-fetch" href="#data-fetch" aria-controls="data-fetch" aria-selected="true"><span class="nav-link-text">Data Fetch</span></a></li><li class="nav-item" role="presentation"><a id="tab-data-restructure" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#data-restructure" href="#data-restructure" aria-controls="data-restructure" aria-selected="false"><span class="nav-link-text">Data Restructure</span></a></li><li class="nav-item" role="presentation"><a id="tab-plots" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#plots" href="#plots" aria-controls="plots" aria-selected="false"><span class="nav-link-text">Plots</span></a></li><li class="nav-item" role="presentation"><a id="tab-code" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#code" href="#code" aria-controls="code" aria-selected="false"><span class="nav-link-text">Code</span></a></li></ul></div></div>
 
 
 </nav>
@@ -146,8 +146,8 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 
 <div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
-<div id="global-temperature-data" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="rows" data-title="Global Temperature Data" aria-labelledby="tab-global-temperature-data">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 50fr) minmax(3em, 50fr); grid-auto-columns: minmax(0, 1fr);">
+<div id="data-fetch" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-title="Data Fetch" data-orientation="rows" aria-labelledby="tab-data-fetch">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 30fr) minmax(3em, 70fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
 <div class="card html-fill-item html-fill-container bslib-card" data-layout="flow" data-bslib-card-init="" data-require-bs-caller="card()">
@@ -198,25 +198,81 @@ Data Extraction
 </div>
 </div>
 </div>
-<div id="line-plot" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" data-title="Line Plot" aria-labelledby="tab-line-plot">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 10fr) minmax(3em, 90fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
+<div id="data-restructure" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-title="Data Restructure" data-orientation="rows" aria-labelledby="tab-data-restructure">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 30fr) minmax(3em, 70fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="card html-fill-item html-fill-container bslib-card" data-layout="flow" data-bslib-card-init="" data-require-bs-caller="card()">
 <div class="card-body html-fill-item html-fill-container">
-<p>Question - how to gracefully exit from R, Quarto, knitr when a python exception is thrown?</p>
+<pre><code>Restructure and validate with some sample rows in R, then send the data structure back to Python</code></pre>
 </div>
 <script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-title="title" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-title="process" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-header">
-title
+process
 </div>
 <div class="card-body html-fill-item html-fill-container">
 <div class="cell-output cell-output-stdout html-fill-item html-fill-container">
-<pre><code>This line will not be reached if an error occurs.</code></pre>
+<pre><code># A tibble: 3 × 13
+   Year   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  1880 -0.19 -0.25 -0.09 -0.16 -0.1  -0.21 -0.18 -0.1  -0.14 -0.23 -0.21 -0.18
+2  1881 -0.2  -0.14  0.03  0.05  0.06 -0.19  0    -0.04 -0.16 -0.22 -0.19 -0.07
+3  1882  0.16  0.14  0.04 -0.17 -0.15 -0.23 -0.16 -0.07 -0.14 -0.24 -0.17 -0.36</code></pre>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output cell-output-stdout html-fill-item html-fill-container">
+<pre><code># A tibble: 1,728 × 3
+    Year name  value
+   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1  1880 Jan   -0.19
+ 2  1880 Feb   -0.25
+ 3  1880 Mar   -0.09
+ 4  1880 Apr   -0.16
+ 5  1880 May   -0.1 
+ 6  1880 Jun   -0.21
+ 7  1880 Jul   -0.18
+ 8  1880 Aug   -0.1 
+ 9  1880 Sep   -0.14
+10  1880 Oct   -0.23
+11  1880 Nov   -0.21
+12  1880 Dec   -0.18
+13  1881 Jan   -0.2 
+14  1881 Feb   -0.14
+15  1881 Mar    0.03
+16  1881 Apr    0.05
+17  1881 May    0.06
+18  1881 Jun   -0.19
+19  1881 Jul    0   
+20  1881 Aug   -0.04
+21  1881 Sep   -0.16
+22  1881 Oct   -0.22
+23  1881 Nov   -0.19
+24  1881 Dec   -0.07
+25  1882 Jan    0.16
+26  1882 Feb    0.14
+27  1882 Mar    0.04
+28  1882 Apr   -0.17
+29  1882 May   -0.15
+30  1882 Jun   -0.23
+31  1882 Jul   -0.16
+32  1882 Aug   -0.07
+33  1882 Sep   -0.14
+34  1882 Oct   -0.24
+35  1882 Nov   -0.17
+36  1882 Dec   -0.36
+# ℹ 1,692 more rows</code></pre>
 </div>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
@@ -228,12 +284,47 @@ title
 </div>
 </div>
 </div>
-<div id="plots" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" data-title="Plots" aria-labelledby="tab-plots">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: ; grid-auto-columns: minmax(0, 1fr);">
+<div id="plots" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-title="Plots" data-orientation="rows" aria-labelledby="tab-plots">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-layout="flow" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<pre><code>Look at the data in Python</code></pre>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-title="Plots" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header">
+Plots
+</div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output cell-output-stdout html-fill-item html-fill-container">
+<pre><code>      Year name  value
+0     1880  Jan  -0.19
+1     1880  Feb  -0.25
+2     1880  Mar  -0.09
+3     1880  Apr  -0.16
+4     1880  May  -0.10
+...    ...  ...    ...
+1723  2023  Aug   1.19
+1724  2023  Sep   1.47
+1725  2023  Oct   1.34
+1726  2023  Nov    NaN
+1727  2023  Dec    NaN
 
+[1728 rows x 3 columns]</code></pre>
 </div>
 </div>
-<div id="code" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" data-title="Code" aria-labelledby="tab-code">
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+<div id="code" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-title="Code" data-orientation="rows" aria-labelledby="tab-code">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
@@ -247,7 +338,7 @@ format: dashboard
 
 ```{r}
 # use of reticulate allows variables created in python
-# to be accessed by R
+# to be accessed by R and vice versa
 library(reticulate)
 ```
 
@@ -257,12 +348,16 @@ import pandas as pd
 import math
 import plotly.express as px
 import datapackage
+import csv
+import sys
+import urllib.request
+from urllib.error import URLError, HTTPError
 
 ```
 
-# Global Temperature Data
+# Data Fetch
 
-## Row {height="50%"}
+## Row {height="30%"}
 
 Data from:
 
@@ -279,15 +374,12 @@ accessed 20YY-MM-DD at &lt;https://data.giss.nasa.gov/gistemp/&gt;.
 model](https://pubs.giss.nasa.gov/abs/le05800h.html). J. Geophys. Res. Atmos., **124**, no. 12, 6307-6326,
 doi:10.1029/2018JD029522.
 
-## Row {height="50%"}
+## Row {height="70%"}
 
 ```{python}
 #| title: Data Extraction 
 
-import csv
-import sys
-import urllib.request
-from urllib.error import URLError, HTTPError
+
 url = 'https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv'
 
 try:
@@ -318,30 +410,68 @@ except Exception as e:
     print(f"An unexpected error occurred: {e}")
     sys.exit("Exiting")
 
+
+# how to gracefully exit from R, Quarto, knitr when a python exception is thrown
+
 ```
 
-# Line Plot
+# Data Restructure
 
-## Row {height="10%"}
+```
+Restructure and validate with some sample rows in R, then send the data structure back to Python
+```
 
-Question - how to gracefully exit from R, Quarto, knitr when a python exception is thrown?
+## Row {height="30%"}
 
-## Row {height="90%"}
+```{r}
+#| title: process 
 
-```{python}
-#| title: title
+library("tidyr")
+library("dplyr")
+# save the retrievd data so it can be easily worked on in console 
+# for dev purposes 
+file_name &lt;- './data/eg4_data.tsv'
+# this is the python data frame coped as R data frame
+df &lt;-py$df
+# remove the string ***
+# it means there is no data yet
+df &lt;- df %&gt;%
+  mutate_all(~replace(., grepl('\\*\\*\\*', .), ''))
 
-print("This line will not be reached if an error occurs.")
+write.table(df, file=file_name, quote=FALSE, sep='\t')
+df &lt;- read.table(file = file_name, sep = '\t', header = TRUE)
+df &lt;- as_tibble(df)
 
+# just the monthly data
+dfm &lt;- df[,1:13]
+#
+n_head &lt;- 3
+head(dfm,n_head)
+
+```
+
+## Row {height="70%"}
+
+```{r}
+# pivot long
+dfml &lt;- pivot_longer(dfm, cols = 2:13)
+dfml %&gt;% print(n = n_head * 12)
+# send R df back to python 
+py$dfml &lt;- dfml
 ```
 
 # Plots
+
+```
+Look at the data in Python
+```
 
 ## Row
 
 ```{python}
 #| title: Plots
 
+print(dfml)
     
 ```
 
