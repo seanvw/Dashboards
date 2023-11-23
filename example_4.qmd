@@ -7,10 +7,18 @@ format: dashboard
 # use of reticulate allows variables created in python
 # to be accessed by R and vice versa
 library(reticulate)
+
+# get the data for use later
+sys_date <- format(Sys.Date(), "%Y-%m-%d")
+
+# save the retrieved data so it can be easily worked on in console 
+# for dev purposes 
+file_name <- paste0('./data/eg4_data_',sys_date,'.tsv')
+
 ```
 
 ```{python}
-# comments
+# imports
 import pandas as pd
 import math
 import plotly.express as px
@@ -19,12 +27,35 @@ import csv
 import sys
 import urllib.request
 from urllib.error import URLError, HTTPError
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from pathlib import Path
+from textwrap import wrap
+
+# Function to get colors array of specified length 
+# Ranges from green through orange to red to indicate increasing temperature anomoly
+def get_color_array(length):
+    # Create a custom color map 
+    cmap = mcolors.LinearSegmentedColormap.from_list("list_name", ["green", "orange", "red"])
+    color_array = [mcolors.rgb2hex(cmap(i)[:3]) for i in np.linspace(0, 1, length)]
+    return color_array
 
 ```
 
 # Data Fetch
 
-## Row {height="30%"}
+## Row {height="40%"}
+
+Introduction of the mini-project, Example #4:
+
+This example addresses a number up issues. 
+
+- Firstly, it circumvents the issue identifed in Example #3 which is the need to have up to date data. The data are now retrieved from the NASA. 
+
+- Secondly, would like to test mixed R and Python code. The work could be done in either language but yet, the ability to mix the best of both languages is desirable in some circumstances.
+
+- And finally, it interesting to look at the data on global warming. Of course, this is one of the most important challenges that humanity faces, if not the most important. 
 
 Data from:
 
@@ -38,14 +69,20 @@ Citations:
 
 -   Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: [Improvements in the GISTEMP uncertainty model](https://pubs.giss.nasa.gov/abs/le05800h.html). J. Geophys. Res. Atmos., **124**, no. 12, 6307-6326, doi:10.1029/2018JD029522.
 
-## Row {height="70%"}
+
+## Row {height="10%"}
+
+```{r} 
+#| title: Data Source 
+print(paste0("Data retrieved ", sys_date))
+```
+
+## Row {height="50%"}
 
 ```{python}
 #| title: Data Extraction 
 
-
 url = 'https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv'
-
 try:
     # Attempt to open the URL
     response = urllib.request.urlopen(url)
@@ -81,20 +118,26 @@ except Exception as e:
 
 # Data Restructure
 
-```
-Restructure and validate with some sample rows in R, then send the data structure back to Python
+## Row {height="10%"}
+
+```{r} 
+#| title: info 
+print(paste0("Data retrieved ", sys_date))
 ```
 
-## Row {height="30%"}
+## Row {height="10%"}
+
+Restructure and validate this data reorginization in R. Just showing 3 sample rows
+
+## Row {height="20%"}
 
 ```{r}
-#| title: process 
+#| title: Source and restructured data sample 
 
 library("tidyr")
 library("dplyr")
-# save the retrievd data so it can be easily worked on in console 
-# for dev purposes 
-file_name <- './data/eg4_data.tsv'
+library("stringr")
+
 # this is the python data frame coped as R data frame
 df <-py$df
 # remove the string ***
@@ -106,7 +149,7 @@ write.table(df, file=file_name, quote=FALSE, sep='\t')
 df <- read.table(file = file_name, sep = '\t', header = TRUE)
 df <- as_tibble(df)
 
-# just the monthly data
+# just take the monthly data
 dfm <- df[,1:13]
 #
 n_head <- 3
@@ -114,38 +157,204 @@ head(dfm,n_head)
 
 ```
 
-## Row {height="70%"}
+## Row {height="60%"}
 
 ```{r}
 # pivot long
 dfml <- pivot_longer(dfm, cols = 2:13)
+colnames(dfml)[colnames(dfml) == 'name'] <- 'month'
+colnames(dfml)[colnames(dfml) == 'value'] <- 'Anomoly_Celcius'
+dfml$Date <- dfml$month
+dfml <- dfml %>% mutate(Date = case_when(
+      Date == 'Jan' ~ paste0(Year, '-01-01'),
+      Date == 'Feb' ~ paste0(Year, '-02-01'),
+      Date == 'Mar' ~ paste0(Year, '-03-01'),
+      Date == 'Apr' ~ paste0(Year, '-04-01'),
+      Date == 'May' ~ paste0(Year, '-05-01'),
+      Date == 'Jun' ~ paste0(Year, '-06-01'),
+      Date == 'Jul' ~ paste0(Year, '-07-01'),
+      Date == 'Aug' ~ paste0(Year, '-08-01'),
+      Date == 'Sep' ~ paste0(Year, '-09-01'),
+      Date == 'Oct' ~ paste0(Year, '-10-01'),
+      Date == 'Nov' ~ paste0(Year, '-11-01'),
+      Date == 'Dec' ~ paste0(Year, '-12-01'),
+                           TRUE ~ 'Exception'))
+# make a separate column for month number 
+dfml$Month_Number <- dfml$Date
+dfml <- dfml %>% mutate(Month_Number = str_replace_all(Month_Number, "\\d{4}-", ""))
+dfml <- dfml %>% mutate(Month_Number = str_replace_all(Month_Number, "-\\d{2}", ""))
+dfml$Month_Number <- as.integer(dfml$Month_Number)
+# make a separate column color scale
+dfml$color_scale <- as.integer(dfml$Year - 1880)
+
+
 dfml %>% print(n = n_head * 12)
 # send R df back to python 
 py$dfml <- dfml
-```
-
-# Plots
 
 ```
-Look at the data in Python
-```
 
-## Row
+# Line Plot
+
+## Row {height="5%"}
+       
+The line plot shows all the available data. An approximately linear increase in temparature anomoly can be seen from around 1978. 
+
+## Row {height="95%"}
 
 ```{python}
-#| title: Plots
+#| title: Line Plot
 
-print(dfml)
+# Convert the 'Date' column to datetime64
+dfml['Date'] = pd.to_datetime(dfml['Date'])
+
+```
+
+```{python}
+#| title: Line Plot
+
+fig = px.line(
+  dfml, x="Date", y="Anomoly_Celcius"
+  )
+
+# Set x-axis Date range
+start_date = '1880-01-01'
+end_date = '2030-01-01'
+fig.update_xaxes(range=[start_date, end_date])
     
 ```
+
+# Violin Plot
+
+## Row {height="5%"}
+
+A violin plot of all the available data. Each 'violin' is a summary of data points for each of the 12 month for that given year. The variabilty of anomolies can be seen clearly with some years have low variabilty e.g. 1971 and some high e.g. 2023.  
+
+## Row {height="95%"}
+
+```{python}
+#| title: Violin plot of all available data.
+fig = px.violin(dfml, y="Anomoly_Celcius", x="Year", box=True, 
+  hover_data=[dfml.Anomoly_Celcius, dfml.Year, dfml.month] )
+fig.show()
+```
+
+# Violin Since..
+
+## Row {height="5%"}
+
+```{python}
+year_var = 1960
+print("Violin Plot Since", year_var)
+
+```
+
+## Row {height="5%"}
+
+A violin plot of data limited to a minimum year. The violins are accompanied by data points dots to the left for each month.  
+
+## Row {height="90%"}
+
+```{python}
+#| title: Violin Plot Since..
+
+dfml_short = dfml[dfml['Year'] >= year_var]
+
+fig = px.violin(dfml_short, 
+  y="Anomoly_Celcius", x="Year", box=False, 
+  points="all", 
+  hover_data=[dfml_short.Anomoly_Celcius, dfml_short.Year, dfml_short.month])
+fig.show()
+```
+
+# Line by Year
+
+## Row {height="10%"}
+
+- This plot I find remarkable. The line colour is a gradient from green through orange to red and is only assigned by the year 
+(i.e. the temperature anomoly is not considered in choosing the colour).
+
+- The coloured banding pattern correlates quite well with temparature anomolies. Sadly, there is no doubt that climate change is progressing year by year and this plot illustrates this quite well.
+
+## Row {height="90%"}
+
+```{python}
+#| title: Line by Year
+
+# very strange that line_shape='spline' results in an error here
+# but with the almost identical code below it's not a problem 
+
+# Specify the desired length of the color array as 
+# the number of distinct years
+# Generate the color array
+colors = get_color_array(dfml['Year'].nunique())
+
+fig1 = px.line(dfml, 
+  y="Anomoly_Celcius", x="Month_Number",
+  line_group="Year", line_shape='hvh',
+  markers=True,
+  color='Year', 
+  color_discrete_sequence=colors,
+  hover_data=[dfml.Anomoly_Celcius, dfml.Year, dfml.month]
+  )
+  
+  
+# Set the x-axis resolution to label every month
+# Strangely these arguments do not work when generating the initial plot
+fig1.update_layout(xaxis=dict(
+        tickmode='linear',  # Use linear tick mode
+        dtick=1  # Specify the interval between ticks
+    ))  
+
+```
+
+# Line by Year Since..
+
+Like the previous plot but now the data are truncated by a minimum year to plot in order to give a better resolution. The line plotting function joins the points with the spline functionwhich is a bit more appealing i think. Colour cooding is the same as in the "Line Plot" i.e. only coloured by year. The steady progress of climate change is astonishing, and sadly, 2023 seems to represent some kind of accelerated change as it really stands out from the pack of already disturbing anomoly curves.
+
+## Row {height="10%"}
+
+```{python}
+year_var = 1975
+print("Line Plot Since", year_var)
+```
+
+## Row {height="90%"}
+
+```{python}
+#| title: Line by Year Since..
+
+dfml_short = dfml[dfml['Year'] >= year_var]
+
+# Specify the desired length of the color array as 
+# the number of distinct years
+# Generate the color array
+colors = get_color_array(dfml_short['Year'].nunique())
+
+
+fig2 = px.line(dfml_short, 
+  y="Anomoly_Celcius", x="Month_Number", line_shape='spline',
+  line_group="Year", 
+  color='Year', color_discrete_sequence=colors,
+  markers=True,
+  hover_data=[dfml_short.Anomoly_Celcius, dfml_short.Year, dfml_short.month])
+
+# Set the x-axis resolution to label every month
+# Strangely these arguments do not work when generating the initial plot
+fig2.update_layout(xaxis=dict(
+        tickmode='linear',  # Use linear tick mode
+        dtick=1  # Specify the interval between ticks
+    ))  
+
+```
+
 
 # Code
 
 ## Row
 
 ```{python}
-from pathlib import Path
-from textwrap import wrap
+
 
 # wrap just the long lines over a specified number of characters
 def wrap_long_lines(input_text, max_line_chars):
