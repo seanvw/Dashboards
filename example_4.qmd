@@ -49,13 +49,13 @@ def get_color_array(length):
 
 Introduction of the mini-project, Example #4:
 
-This example addresses a number up issues. 
+This example addresses a number up issues.
 
-- Firstly, it circumvents the issue identifed in Example #3 which is the need to have up to date data. The data are now retrieved from the NASA. 
+-   Firstly, it circumvents the issue identifed in Example #3 which is the need to have up to date data. The data are now retrieved from the NASA.
 
-- Secondly, would like to test mixed R and Python code. The work could be done in either language but yet, the ability to mix the best of both languages is desirable in some circumstances.
+-   Secondly, would like to further test mixing R and Python code. The work could be done in either language but yet, the ability to mix the best of both languages is desirable in some circumstances.
 
-- And finally, it interesting to look at the data on global warming. Of course, this is one of the most important challenges that humanity faces, if not the most important. 
+-   And finally, it interesting to look at the data on global warming. Of course, this is one of the most important challenges that humanity faces, if not the most important.
 
 Data from:
 
@@ -69,10 +69,9 @@ Citations:
 
 -   Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: [Improvements in the GISTEMP uncertainty model](https://pubs.giss.nasa.gov/abs/le05800h.html). J. Geophys. Res. Atmos., **124**, no. 12, 6307-6326, doi:10.1029/2018JD029522.
 
-
 ## Row {height="10%"}
 
-```{r} 
+```{r}
 #| title: Data Source 
 print(paste0("Data retrieved ", sys_date))
 ```
@@ -120,8 +119,8 @@ except Exception as e:
 
 ## Row {height="10%"}
 
-```{r} 
-#| title: info 
+```{r}
+#| title: Tab information 
 print(paste0("Data retrieved ", sys_date))
 ```
 
@@ -196,11 +195,11 @@ py$dfml <- dfml
 
 # Line Plot
 
-## Row {height="5%"}
-       
-The line plot shows all the available data. An approximately linear increase in temparature anomoly can be seen from around 1978. 
+## Row {height="10%"}
 
-## Row {height="95%"}
+The line plot shows all the available data. An approximately linear increase in temparature anomoly can be seen from around 1978.
+
+## Row {height="90%"}
 
 ```{python}
 #| title: Line Plot
@@ -226,11 +225,13 @@ fig.update_xaxes(range=[start_date, end_date])
 
 # Violin Plot
 
-## Row {height="5%"}
+## Row {height="15%"}
 
-A violin plot of all the available data. Each 'violin' is a summary of data points for each of the 12 month for that given year. The variabilty of anomolies can be seen clearly with some years have low variabilty e.g. 1971 and some high e.g. 2023.  
+A violin plot of all the available data. Each 'violin' is a summary of data points for each of the 12 month for that given year. The 'violin' encompasses a box-plot if one Zooms in. Zooming and other dynamic plotting features require a manual refresh after using the controls.
 
-## Row {height="95%"}
+The variability of anomolies can be seen clearly with some years have low variability e.g. 1971 and some high e.g. 2023.
+
+## Row {height="85%"}
 
 ```{python}
 #| title: Violin plot of all available data.
@@ -251,7 +252,8 @@ print("Violin Plot Since", year_var)
 
 ## Row {height="5%"}
 
-A violin plot of data limited to a minimum year. The violins are accompanied by data points dots to the left for each month.  
+A violin plot of data limited to a minimum year. 
+The violins are accompanied by data points dots to the left for each month.
 
 ## Row {height="90%"}
 
@@ -269,14 +271,13 @@ fig.show()
 
 # Line by Year
 
-## Row {height="10%"}
+## Row {height="15%"}
 
-- This plot I find remarkable. The line colour is a gradient from green through orange to red and is only assigned by the year 
-(i.e. the temperature anomoly is not considered in choosing the colour).
+-   This plot I find remarkable: the line colour is a gradient from green through orange to red and is only assigned by the year (i.e. the temperature anomoly is not considered in choosing the color).
 
-- The coloured banding pattern correlates quite well with temparature anomolies. Sadly, there is no doubt that climate change is progressing year by year and this plot illustrates this quite well.
+-   The colored banding pattern correlates quite well with temperature anomalies. Sadly, there is no doubt that climate change is progressing year by year and this plot illustrates the phenomena quite well.
 
-## Row {height="90%"}
+## Row {height="85%"}
 
 ```{python}
 #| title: Line by Year
@@ -310,7 +311,7 @@ fig1.update_layout(xaxis=dict(
 
 # Line by Year Since..
 
-Like the previous plot but now the data are truncated by a minimum year to plot in order to give a better resolution. The line plotting function joins the points with the spline functionwhich is a bit more appealing i think. Colour cooding is the same as in the "Line Plot" i.e. only coloured by year. The steady progress of climate change is astonishing, and sadly, 2023 seems to represent some kind of accelerated change as it really stands out from the pack of already disturbing anomoly curves.
+Like the previous plot but now the data are truncated by a minimum year to plot in order to give a better resolution. The line plotting function joins the points with the spline function which is a bit more appealing i think. Color coding is the same as in the "Line Plot" i.e. only colored by year. The steady progress of climate change is astonishing, and sadly, 2023 seems to represent some kind of accelerated change as it really stands out from the pack of already disturbing anomaly curves.
 
 ## Row {height="10%"}
 
@@ -348,6 +349,16 @@ fig2.update_layout(xaxis=dict(
 
 ```
 
+# Always more to do..
+
+There are really many ways of representing and analyzing this data.
+
+Some targets given time include:
+
+(1) plots of yearly averaged data (simple correlations, heat-maps..)
+(2) statistical hypothesis testing
+(3) regression analysis and prediction
+(4) more dynamic interaction features 
 
 # Code
 

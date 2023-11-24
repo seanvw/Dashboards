@@ -9,7 +9,6 @@ format: dashboard
 library(reticulate)
 ```
 
-
 ```{python}
 # comments
 import pandas as pd
@@ -27,15 +26,12 @@ df['pop_log10'] = df['pop_log10'].map(lambda pop_log10: math.log10(pop_log10) )
 
 # GDP and Life Expectancy
 
-## Row  {height="20%"}
-```
-Like 'Example #1', but modified for the following reasons
-  - exploration of layouts
-  - testing the facility and functionality to mixup Python and R code and to access and mutate the same variables and data structures
-  - main plot of GDP and Life Expectancy is more easily interpreted
-```
+## Row {height="20%"}
+    
+Like Example #1, but modified for the following reasons:  (1) exploration of layouts (2) testing the facility and functionality to mashup Python and R code and to access and mutate the same variables and data structures (3) main plot of GDP and Life Expectancy is more easily interpreted
 
-## Row  {height="80%"}
+## Row {height="80%"}
+
 ```{python}
 #| title: GDP and Life Expectancy 
 px.scatter(  
@@ -50,6 +46,7 @@ px.scatter(
 # Population and Life Expectancy
 
 ## Row {.tabset}
+
 ```{python}
 #| title: Population
 px.area(
@@ -68,9 +65,9 @@ px.line(
 
 # Data
 
-This is a demonstration of the facility to access variables and data structures created in Python with R code. The head of a data frame is printed using both languages whilst the number of rows is set by a variable set in Python and read in R. Note that the row indexes differ by 1 (0 and 1 based) and that the precision of printing is set differently. Note also, that R prints an additional line of data; the reason is that the code increments a python variable in R i.e. the code performs a mutability test and it works.
+This is a demonstration of the facility to access variables and data structures created in Python with R code. The head of a data frame is printed using both languages whilst the number of rows is set by a variable in Python and read in R. Note that the row indexes differ by 1 (0 and 1 based) and that the precision of printing is set differently. Note also, that R prints an additional line of data; the reason is that the code increments a python variable in R i.e. the code performs a mutability test and it works.
 
-## Row 
+## Row
 
 ```{python}
 #| title: Head of python pandas data frame 
@@ -83,7 +80,7 @@ with pd.option_context(
     
 ```
 
-## Row 
+## Row
 
 ```{r}
 #| title: The head of the same data frame but printed with R
@@ -120,4 +117,3 @@ wrapped_txt = wrap_long_lines(txt, 130)
 print(wrapped_txt)
 
 ```
-

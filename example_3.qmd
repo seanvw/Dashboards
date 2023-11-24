@@ -20,7 +20,7 @@ import datapackage
 
 # Global Temperature Data
 
-## Row {height="50%"}
+## Row {height="30%"}
 
 Using data from <https://datahub.io/core/global-temp>
 
@@ -34,7 +34,7 @@ GCAG: Global temperature anomaly data come from the Global Historical Climatolog
 
 These two data-sets are blended into a single product to produce the combined global land and ocean temperature anomalies.
 
-## Row {height="50%"}
+## Row {height="70%"}
 
 ```{python}
 #| title: Data Extraction 
@@ -70,7 +70,7 @@ for resource in resources:
 
 ## Row {height="10%"}
 
-Global Temperature Time Series from the two data-sets. It is clear from the plot that the same message is delivered by both. The Source key can be toggled to reveal one or other data-set. The Zoom feature is however problematic - requiring two clicks e.g. Click "+" and a second click on Line Plot to show the plot change. Perhaps a HTML/CSS generation issue or web-browser compatibility issue. Issue saved to be addressed later.
+Global Temperature Time Series from the two data-sets; the same message is delivered by both and is obvious. The Source key can be toggled to reveal one or other data-set. The Zoom feature is however problematic - requiring two clicks e.g. Click "+" and a second click on Line Plot to show the plot change. Perhaps a HTML/CSS generation issue or web-browser compatibility issue. Issue saved to be addressed later.
 
 ## Row {height="90%"}
 
@@ -92,7 +92,7 @@ fig.update_xaxes(range=[start_date, end_date])
 
 # HeatMaps
 
-The same data as in the Line Plot now represented in a different way in an attempt to present a more striking view of climate change. To some extent it works, but yet it is confusing for the casual observer since a color scale is produced using a histogram function on Mean (already an average of multiple observations). So for 6 months we have 6 observations of temperature anomalies and these are binned according to their value determined by a resolution parameter (nbinsy is set to 20), then a maximum is taken. That is why we get multiple observations per date range in some cases. Another issue is that all cells in the matrix(x,y) have a value even if they represent 0 observations and therefore max of Mean is 0 (this issue is revealed as mouseover pop-ups are enabled). This plot is both a hit (yes, it's striking) and a miss at the same time. Overall, it's a flop because visualization should be straight forward to understand. In any case, need to solve the issue of retrieving contemporaneous data and will re-address visualization at this stage with a further example.
+The same data as in the Line Plot now represented in a different way in an attempt to present a more striking view of climate change. To some extent it works, but yet it is confusing for the casual observer since a color scale is produced using a histogram function on Mean (already an average of multiple observations). So for 6 months we have 6 observations of temperature anomalies and these are binned according to their value determined by a resolution parameter (nbinsy is set to 20), then a maximum is taken. That is why we get multiple observations per date range. Another issue is that all cells in the matrix(x,y) have a value even if they represent 0 observations and therefore max of Mean is 0 (this issue is revealed as mouse-over pop-ups are enabled). This plot is both a hit (yes, it's striking) and a miss at the same time. Overall, it's a flop because visualization should be straight forward to understand. In any case, need to solve the issue of retrieving contemporaneous data and will re-address visualization at this stage with a further example.
 
 ## Row
 
