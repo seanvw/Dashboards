@@ -8,7 +8,7 @@ format: dashboard
 # to be accessed by R and vice versa
 library(reticulate)
 
-# get the data for use later
+# get the date for use later
 sys_date <- format(Sys.Date(), "%Y-%m-%d")
 
 # save the retrieved data so it can be easily worked on in console 
@@ -252,8 +252,7 @@ print("Violin Plot Since", year_var)
 
 ## Row {height="5%"}
 
-A violin plot of data limited to a minimum year. 
-The violins are accompanied by data points dots to the left for each month.
+A violin plot of data limited to a minimum year. The violins are accompanied by data points dots to the left for each month.
 
 ## Row {height="90%"}
 
@@ -351,14 +350,17 @@ fig2.update_layout(xaxis=dict(
 
 # Always more to do..
 
-There are really many ways of representing and analyzing this data.
+The main task target of exploring Dashboards with R and Python mash-up is completed. However, there are really many ways of representing, analyzing and processing this data.
 
-Some targets given time include:
+Some targets, given time, include:
 
 (1) plots of yearly averaged data (simple correlations, heat-maps..)
 (2) statistical hypothesis testing
 (3) regression analysis and prediction
-(4) more dynamic interaction features 
+(4) more dynamic interaction features
+(5) small restructing for robustness: locally cache the read of the source data and operate on the latest version of valid data in the case of server or network down conditions
+(6) data source change trigger
+(7) and surely, more points to add....
 
 # Code
 
