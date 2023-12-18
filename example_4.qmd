@@ -207,6 +207,10 @@ The line plot shows all the available data. An approximately linear increase in 
 # Convert the 'Date' column to datetime64
 dfml['Date'] = pd.to_datetime(dfml['Date'])
 
+# for use in another mini-project 
+dfml.to_csv("../Dash/gistemp.csv",index=False)
+
+
 ```
 
 ```{python}
