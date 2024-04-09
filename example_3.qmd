@@ -26,6 +26,8 @@ Using data from <https://datahub.io/core/global-temp>
 
 The data runs from 1880 to 2016. Unfortunately not up to date. Will tackle this issue in a further example.
 
+A new issue found in April 2024 is that the JSON file (https://datahub.io/core/global-temp/datapackage.json) no longer gives a resolvable path to the data that needs now to be manually prefixed with https://r2.datahub.io/clt98lqg6000el708ja5zbtz0/master/raw/. That URL does not look stable but we will see.
+
 Data are included from the GISS Surface Temperature (GISTEMP) analysis and the global component of Climate at a Glance (GCAG). Anomalies in degrees Celsius.
 
 GISTEMP: Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies \[i.e. deviations from the corresponding 1951-1980 means\].
@@ -39,7 +41,9 @@ These two data-sets are blended into a single product to produce the combined gl
 ```{python}
 #| title: Data Extraction 
 
+
 data_url = 'https://datahub.io/core/global-temp/datapackage.json'
+new_data_url_prefix = 'https://r2.datahub.io/clt98lqg6000el708ja5zbtz0/master/raw/' 
 
 # to load Data Package into storage
 package = datapackage.Package(data_url)
@@ -55,7 +59,8 @@ for resource in resources:
         if (key == 'description' or key == 'name'):
           print(key, ":", desc[key])
     if resource.tabular and resource.name == "monthly":
-        df = pd.read_csv(resource.descriptor['path'])
+        prefixed_data_url = new_data_url_prefix + resource.descriptor['path']
+        df = pd.read_csv(prefixed_data_url)
         print(df)
         # convert to date
         print("Converting to date type...")
@@ -63,6 +68,8 @@ for resource in resources:
         print(df)
         print(df.dtypes)
     print('---------------------------------------------', "\n")
+    
+  
 
 ```
 

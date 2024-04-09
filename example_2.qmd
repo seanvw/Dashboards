@@ -27,8 +27,8 @@ df['pop_log10'] = df['pop_log10'].map(lambda pop_log10: math.log10(pop_log10) )
 # GDP and Life Expectancy
 
 ## Row {height="20%"}
-    
-Like Example #1, but modified for the following reasons:  (1) exploration of layouts (2) testing the facility and functionality to mashup Python and R code and to access and mutate the same variables and data structures (3) main plot of GDP and Life Expectancy is more easily interpreted
+
+Like Example #1, but modified for the following reasons: (1) exploration of layouts (2) testing the facility and functionality to mashup Python and R code and to access and mutate the same variables and data structures (3) main plot of GDP and Life Expectancy is more easily interpreted
 
 ## Row {height="80%"}
 
